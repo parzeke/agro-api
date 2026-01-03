@@ -9,6 +9,18 @@ export const getUsers = async (req, res) => {
     }
 };
 
+export const getUsersWithLocation = async (req, res) => {
+    try {
+        const users = await User.find({
+            location: { $ne: null },
+            'location.coordinates': { $exists: true, $ne: [] }
+        }).select('name avatar location address');
+        res.status(200).json(users);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 export const getUserById = async (req, res) => {
     try {
         const { id } = req.params;

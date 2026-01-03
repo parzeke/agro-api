@@ -14,6 +14,16 @@ const productSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
+  weight: Number,
+  weightUnit: {
+    type: String,
+    enum: ['gr', 'kg'],
+    default: 'kg'
+  },
+  stock: {
+    type: Number,
+    default: 1
+  }
 }, { timestamps: true });
 
 

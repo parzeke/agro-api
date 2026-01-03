@@ -1,0 +1,44 @@
+[
+  {
+    "_id": "6953cec3d4f8a6f31a1b3a57",
+    "name": "Frutas",
+    "createdAt": "2025-12-30T13:08:19.389Z",
+    "updatedAt": "2025-12-30T16:27:58.438Z",
+    "__v": 0
+  },
+  {
+    "_id": "6953cec3d4f8a6f31a1b3a58",
+    "name": "Verduras",
+    "createdAt": "2025-12-30T13:08:19.393Z",
+    "updatedAt": "2025-12-30T16:30:36.031Z",
+    "__v": 0
+  },
+  {
+    "_id": "6953cec3d4f8a6f31a1b3a59",
+    "name": "Lácteos",
+    "createdAt": "2025-12-30T13:08:19.393Z",
+    "updatedAt": "2025-12-30T16:33:56.011Z",
+    "__v": 0
+  },
+  {
+    "_id": "6953cec3d4f8a6f31a1b3a5a",
+    "name": "Carnes",
+    "createdAt": "2025-12-30T13:08:19.394Z",
+    "updatedAt": "2025-12-30T16:35:34.538Z",
+    "__v": 0
+  },
+  {
+    "_id": "6953cec3d4f8a6f31a1b3a5b",
+    "name": "Cestas Variadas",
+    "createdAt": "2025-12-30T13:08:19.394Z",
+    "updatedAt": "2025-12-30T16:37:53.815Z",
+    "__v": 0
+  },
+  {
+    "_id": "6953cec3d4f8a6f31a1b3a5c",
+    "name": "Salud y otros",
+    "createdAt": "2025-12-30T13:08:19.394Z",
+    "updatedAt": "2025-12-30T13:08:19.394Z",
+    "__v": 0
+  }
+]

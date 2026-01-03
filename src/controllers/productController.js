@@ -1,8 +1,19 @@
 import Product from "../config/models/Products.js"
 
 export const createProduct = async (req, res) => {
-  const product = await Product.create(req.body);
-  res.status(201).json(product);
+  try {
+    let product = await Product.create(req.body);
+
+    // Populate before sending back
+    product = await Product.findById(product._id)
+      .populate('category')
+      .populate('seller', 'name avatar location address');
+
+    res.status(201).json(product);
+  } catch (error) {
+    console.error("Error creating product:", error);
+    res.status(500).json({ message: "Error creating product", error: error.message });
+  }
 };
 
 export const getProducts = async (req, res) => {
@@ -15,11 +26,13 @@ export const getProducts = async (req, res) => {
     if (seller) {
       query.seller = seller;
     }
-    const products = await Product.find(query).populate('category');
+    const products = await Product.find(query)
+      .populate('category')
+      .populate('seller', 'name avatar location address');
     res.status(200).json(products);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Server error" });
+    console.error('Error fetching products:', error);
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 };
 
@@ -44,13 +57,35 @@ export const deleteProduct = async (req, res) => {
   }
 };
 
+
+export const updateProduct = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updateData = req.body;
+
+    // Direct update without ownership check (as requested)
+    const updatedProduct = await Product.findByIdAndUpdate(id, updateData, { new: true })
+      .populate('category')
+      .populate('seller', 'name avatar location address');
+
+    if (!updatedProduct) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    res.status(200).json(updatedProduct);
+  } catch (error) {
+    console.error("Error updating product:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+
 export const getProductById = async (req, res) => {
   try {
     const product = await Product.findById(req.params.id)
       .populate("category")
       .populate({
         path: "seller",
-        select: "name phone" // Only expose necessary info
+        select: "name phone avatar location address" // Include location and address
       });
 
     if (!product) {
@@ -59,6 +94,7 @@ export const getProductById = async (req, res) => {
 
     res.status(200).json(product);
   } catch (error) {
-    res.status(500).json({ message: "Server error" });
+    console.error('Error fetching product by ID:', error);
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 };

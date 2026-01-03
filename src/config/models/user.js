@@ -6,26 +6,42 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-
+    email: {
+      type: String,
+      unique: true,
+      sparse: true
+    },
     phone: {
       type: String,
-      required: true,
       unique: true,
+      sparse: true // Allows multiple null values
     },
-
     password: {
       type: String,
-      required: true,
+      // required: true, // No longer required for social auth
     },
-
-    photo: {
+    googleId: { type: String },
+    facebookId: { type: String },
+    avatar: {
       type: String,
-      default: '',
+      default: null
     },
-  },
-  { timestamps: true }
-);
+    location: {
+      type: {
+        type: String,
+        enum: ['Point']
+      },
+      coordinates: [Number] // [longitude, latitude]
+    },
+    address: {
+      type: String,
+      default: null
+    }
+  }, {
+  timestamps: true,
+});
 
-const User = mongoose.model('User', userSchema);
+// Create sparse geospatial index for location-based queries (only for users with location)
+userSchema.index({ location: '2dsphere' }, { sparse: true });
 
-export default User;
+export default mongoose.model('User', userSchema);
